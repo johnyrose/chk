@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/urfave/cli"
+	"github.com/urfave/cli/v2"
 )
 
 func GetCli() *cli.App {
@@ -9,7 +9,16 @@ func GetCli() *cli.App {
 		Name:      "chk",
 		Usage:     "A simple command line tool to check connection between devices.",
 		UsageText: "chk [command flags]",
-		Commands:  []cli.Command{},
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:    "type",
+				Aliases: []string{"t"},
+				Usage:   "Determines the type of connection that will be tested.",
+			},
+		},
+		Action: func(c *cli.Context) error {
+			return nil
+		},
 	}
 	return app
 }
