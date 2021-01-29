@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"github.com/Ripolak/chk/chk"
 	"github.com/urfave/cli/v2"
 )
 
@@ -9,15 +10,15 @@ func GetCli() *cli.App {
 		Name:      "chk",
 		Usage:     "A simple command line tool to check connection between devices.",
 		UsageText: "chk [command flags]",
-		Flags: []cli.Flag{
-			&cli.StringFlag{
-				Name:    "type",
-				Aliases: []string{"t"},
-				Usage:   "Determines the type of connection that will be tested.",
+		Commands: []*cli.Command{
+			{
+				Name:    "ping",
+				Aliases: []string{"icmp"},
+				Usage:   "Check if the target address is accessible via ICMP protocol.",
+				Action: func(c *cli.Context) error {
+					return chk.CheckICMP()
+				},
 			},
-		},
-		Action: func(c *cli.Context) error {
-			return nil
 		},
 	}
 	return app

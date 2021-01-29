@@ -1,4 +1,5 @@
-module chk
+module github.com/Ripolak/chk
+
 
 go 1.15
 

@@ -1,9 +1,10 @@
 package main
 
 import (
-	"chk/cli"
 	"log"
 	"os"
+
+	"github.com/Ripolak/chk/cli"
 )
 
 func main() {
