@@ -42,7 +42,11 @@ var PingCommand = &cli.Command{
 }
 
 func pingAction(c *cli.Context) error {
-	address := c.Args().Get(0)
+	address := c.Args().First()
+	err := validateArgument(address)
+	if err != nil {
+		return err
+	}
 	verbose := c.Bool("verbose")
 	count := c.Int("count")
 	timeout := c.Int("timeout")
@@ -62,4 +66,11 @@ func pingAction(c *cli.Context) error {
 		fmt.Println(fmt.Sprintf("%s cannot be reached.", address))
 	}
 	return err
+}
+
+func validateArgument(address string) error {
+	if address == "" {
+		return fmt.Errorf("address must be provided")
+	}
+	return nil
 }
