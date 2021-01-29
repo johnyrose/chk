@@ -3,6 +3,7 @@ package commands
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 
 	"github.com/Ripolak/chk/chk"
 	"github.com/go-ping/ping"
@@ -54,7 +55,7 @@ func pingAction(c *cli.Context) error {
 	interval := c.Int("interval")
 	res, err := chk.CheckICMP(address, count, timeout, interval)
 	displayResult(res, address, verbose)
-	return err
+	return nil
 }
 
 func displayResult(res *ping.Statistics, address string, verbose bool) {
@@ -66,7 +67,7 @@ func displayResult(res *ping.Statistics, address string, verbose bool) {
 			fmt.Println(string(b))
 		}
 	}
-	if res.PacketLoss != 100 {
+	if !reflect.ValueOf(res).IsNil() && res.PacketLoss != 100 {
 		fmt.Println(fmt.Sprintf("Successful ping connection to %s", address))
 	} else {
 		fmt.Println(fmt.Sprintf("%s cannot be reached.", address))
