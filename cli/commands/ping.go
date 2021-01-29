@@ -10,6 +10,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// PingCommand represents the 'ping' or 'icmp' commnand options for the CLI.
 var PingCommand = &cli.Command{
 	Name:    "ping",
 	Aliases: []string{"icmp"},
