@@ -67,7 +67,7 @@ func displayResult(res *ping.Statistics, address string, verbose bool) {
 		}
 	}
 	if res.PacketLoss != 100 {
-		fmt.Println(fmt.Sprintf("Successful ping connection %s", address))
+		fmt.Println(fmt.Sprintf("Successful ping connection to %s", address))
 	} else {
 		fmt.Println(fmt.Sprintf("%s cannot be reached.", address))
 	}
