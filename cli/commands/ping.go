@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Ripolak/chk/chk"
+	"github.com/go-ping/ping"
 	"github.com/urfave/cli/v2"
 )
 
@@ -52,6 +53,11 @@ func pingAction(c *cli.Context) error {
 	timeout := c.Int("timeout")
 	interval := c.Int("interval")
 	res, err := chk.CheckICMP(address, count, timeout, interval)
+	displayResult(res, address, verbose)
+	return err
+}
+
+func displayResult(res *ping.Statistics, address string, verbose bool) {
 	if verbose {
 		b, err := json.MarshalIndent(res, "", "	")
 		if err != nil {
@@ -65,7 +71,6 @@ func pingAction(c *cli.Context) error {
 	} else {
 		fmt.Println(fmt.Sprintf("%s cannot be reached.", address))
 	}
-	return err
 }
 
 func validateArgument(address string) error {
