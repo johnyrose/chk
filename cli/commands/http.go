@@ -1,7 +1,6 @@
 package commands
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -20,12 +19,6 @@ var HttpCommand = &cli.Command{
 			Value:   1,
 			Usage:   "Time to wait for a response in seconds.",
 		},
-		&cli.BoolFlag{
-			Name:    "verbose",
-			Aliases: []string{"v"},
-			Value:   false,
-			Usage:   "Specifies whether to show verbose information about the http result.",
-		},
 	},
 	Action: httpAction,
 }
@@ -36,26 +29,17 @@ func httpAction(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	verbose := c.Bool("verbose")
 	timeout := c.Int("timeout")
 	res, err := chk.CheckHTTP(address, timeout)
 	if err != nil {
 		displayHttpErrorResult(address, err)
 	} else {
-		displayHttpResult(res.Response(), address, verbose)
+		displayHttpResult(res.Response(), address)
 	}
 	return nil
 }
 
-func displayHttpResult(res *http.Response, address string, verbose bool) {
-	if verbose {
-		b, err := json.MarshalIndent(res, "", "	")
-		if err != nil {
-			fmt.Println("Failed to parse verbose info about the http request result.")
-		} else {
-			fmt.Println(string(b))
-		}
-	}
+func displayHttpResult(res *http.Response, address string) {
 	fmt.Println(fmt.Sprintf("Successful http connection to %s. Response code that was received: %v", address, res.StatusCode))
 }
 
