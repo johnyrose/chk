@@ -33,18 +33,18 @@ func httpAction(c *cli.Context) error {
 	timeout := c.Int("timeout")
 	res, err := chk.CheckHTTP(address, timeout)
 	if err != nil {
-		displayHttpErrorResult(address, err)
+		displayHTTPErrorResult(address, err)
 	} else {
-		displayHttpResult(res.Response(), address)
+		displayHTTPResult(res.Response(), address)
 	}
 	return nil
 }
 
-func displayHttpResult(res *http.Response, address string) {
+func displayHTTPResult(res *http.Response, address string) {
 	fmt.Println(fmt.Sprintf("Successful http connection to %s. Response code that was received: %v", address, res.StatusCode))
 }
 
-func displayHttpErrorResult(address string, err error) {
+func displayHTTPErrorResult(address string, err error) {
 	if strings.Contains(err.Error(), "connection refused") {
 		fmt.Println(fmt.Sprintf("Got connection refused from %s. Target is reachable but does not listen in the specified port.", address))
 	} else {
