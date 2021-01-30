@@ -14,6 +14,7 @@ func GetCli() *cli.App {
 			commands.PingCommand,
 			commands.HttpCommand,
 			commands.TCPCommand,
+			commands.SSHCommand,
 		},
 	}
 	return app
