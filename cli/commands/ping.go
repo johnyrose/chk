@@ -55,11 +55,11 @@ func pingAction(c *cli.Context) error {
 	timeout := c.Int("timeout")
 	interval := c.Int("interval")
 	res, err := chk.CheckICMP(address, count, timeout, interval)
-	displayResult(res, address, verbose)
+	displayPingResult(res, address, verbose)
 	return nil
 }
 
-func displayResult(res *ping.Statistics, address string, verbose bool) {
+func displayPingResult(res *ping.Statistics, address string, verbose bool) {
 	if verbose {
 		b, err := json.MarshalIndent(res, "", "	")
 		if err != nil {
