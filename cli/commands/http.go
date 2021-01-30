@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/Ripolak/chk/chk"
 	"github.com/urfave/cli/v2"
@@ -44,5 +45,9 @@ func displayHttpResult(res *http.Response, address string) {
 }
 
 func displayHttpErrorResult(address string, err error) {
-	fmt.Println(fmt.Sprintf("HTTP connection to %s failed. The following error was received: '%s'", address, err))
+	if strings.Contains(err.Error(), "connection refused") {
+		fmt.Println(fmt.Sprintf("Got connection refused from %s. Target is reachable but does not listen in the specified port.", address))
+	} else {
+		fmt.Println(fmt.Sprintf("HTTP connection to %s failed. The following error was received: '%s'", address, err))
+	}
 }
