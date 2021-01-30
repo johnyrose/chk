@@ -1,8 +1,11 @@
 package commands
 
 import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+
 	"github.com/Ripolak/chk/chk"
-	"github.com/imroc/req"
 	"github.com/urfave/cli/v2"
 )
 
@@ -36,10 +39,26 @@ func httpAction(c *cli.Context) error {
 	verbose := c.Bool("verbose")
 	timeout := c.Int("timeout")
 	res, err := chk.CheckHTTP(address, timeout)
-	displayHttpResult(res, address, verbose)
+	if err != nil {
+		displayHttpErrorResult(address, err)
+	} else {
+		displayHttpResult(res.Response(), address, verbose)
+	}
 	return nil
 }
 
-func displayHttpResult(res *req.Resp, address string, verbose bool) {
+func displayHttpResult(res *http.Response, address string, verbose bool) {
+	if verbose {
+		b, err := json.MarshalIndent(res, "", "	")
+		if err != nil {
+			fmt.Println("Failed to parse verbose info about the http request result.")
+		} else {
+			fmt.Println(string(b))
+		}
+	}
+	fmt.Println(fmt.Sprintf("Successful http connection to %s. Response code that was received: %v", address, res.StatusCode))
+}
 
+func displayHttpErrorResult(address string, err error) {
+	fmt.Println(fmt.Sprintf("HTTP connection to %s failed. The following error was received: '%s'", address, err))
 }

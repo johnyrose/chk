@@ -12,6 +12,7 @@ func GetCli() *cli.App {
 		UsageText: "chk [command flags]",
 		Commands: []*cli.Command{
 			commands.PingCommand,
+			commands.HttpCommand,
 		},
 	}
 	return app
