@@ -13,6 +13,7 @@ func GetCli() *cli.App {
 		Commands: []*cli.Command{
 			commands.PingCommand,
 			commands.HttpCommand,
+			commands.TCPCommand,
 		},
 	}
 	return app
