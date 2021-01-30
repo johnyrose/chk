@@ -23,14 +23,14 @@ func tcpAction(c *cli.Context) error {
 	}
 	res, err := chk.CheckTCP(address)
 	if err != nil {
-		displayTCPResult(res, address)
-	} else {
 		displayTCPErrorResult(err, address)
+	} else {
+		displayTCPResult(res, address)
 	}
 	return nil
 }
 
-func displayTCPResult(res *net.TCPConn, address string) {
+func displayTCPResult(res net.Conn, address string) {
 	fmt.Println(fmt.Sprintf("Successful TCP connection to %s.", address))
 }
 

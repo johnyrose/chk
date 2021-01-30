@@ -2,14 +2,11 @@ package chk
 
 import "net"
 
-func CheckTCP(address string) (*net.TCPConn, error) {
-	fullAddr, err := net.ResolveTCPAddr("tcp", address)
+func CheckTCP(address string) (net.Conn, error) {
+	conn, err := net.Dial("tcp", address)
 	if err != nil {
 		return nil, err
 	}
-	conn, err := net.DialTCP("tcp", nil, fullAddr)
-	if err != nil {
-		return nil, err
-	}
+	conn.Close()
 	return conn, nil
 }
