@@ -27,6 +27,9 @@ var SSHCommand = &cli.Command{
 func sshAction(c *cli.Context) error {
 	address := c.Args().First()
 	err := validateArgument(address)
+	if len(strings.Split(address, ":")) != 2 {
+		address = address + ":22"
+	}
 	timeout := c.Int("timeout")
 	if err != nil {
 		return err
@@ -37,11 +40,14 @@ func sshAction(c *cli.Context) error {
 }
 
 func displaySSHResult(address string, err error) {
+	// TODO: Find a cleaner way to write those errors.
 	if err != nil {
-		if _, ok := err.(*net.OpError); ok {
+		if strings.Contains(err.Error(), "overflow reading") {
+			fmt.Println(fmt.Sprintf("SSH connection to %s failed. Target is reachable but doesn't appear to listen in SSH protocol or uses a non-mathching SSH version. \nThe following error was received: %s", address, err.Error()))
+		} else if strings.Contains(err.Error(), "connection refused") {
+			fmt.Println(fmt.Sprintf("Got connection refused when connecting %s with SSH. Target is reachable but doesn't listen in the specified port.", address))
+		} else if _, ok := err.(*net.OpError); ok {
 			fmt.Println(fmt.Sprintf("SSH connection to %s failed. The following error was received: %s", address, err.Error()))
-		} else if strings.Contains(err.Error(), "overflow reading") {
-			fmt.Println(fmt.Sprintf("SSH connection to %s failed. Target is reachable but doesn't appear to listen in SSH protocol or uses a non-mathching SSH version.", address))
 		} else if strings.Contains(err.Error(), "unable to authenticate") {
 			fmt.Println(fmt.Sprintf("Successful SSH connection to %s.", address))
 		}
