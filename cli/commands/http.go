@@ -30,6 +30,9 @@ func httpAction(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
+	if !strings.HasPrefix(address, "http://") && !strings.HasPrefix(address, "https://") {
+		address = "http://" + address
+	}
 	timeout := c.Int("timeout")
 	res, err := chk.CheckHTTP(address, timeout)
 	if err != nil {
