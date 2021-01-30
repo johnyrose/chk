@@ -9,8 +9,8 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// HttpCommand represents a command in the CLI that checks HTTP or HTTPS connection.
-var HttpCommand = &cli.Command{
+// HTTPCommand represents a command in the CLI that checks HTTP or HTTPS connection.
+var HTTPCommand = &cli.Command{
 	Name:  "http",
 	Usage: "Check if the target address is accessible via HTTP.",
 	Flags: []cli.Flag{
