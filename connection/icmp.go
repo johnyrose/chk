@@ -1,6 +1,7 @@
 package connection
 
 import (
+	"runtime"
 	"time"
 
 	"github.com/go-ping/ping"
@@ -10,6 +11,9 @@ func CheckICMP(address string, count int, timeout int, interval int) (*ping.Stat
 	pinger, err := ping.NewPinger(address)
 	if err != nil {
 		return nil, err
+	}
+	if runtime.GOOS == "windows" {
+		pinger.SetPrivileged(true)
 	}
 	pinger.Count = count
 	pinger.Timeout = time.Duration(timeout * int(time.Second))
