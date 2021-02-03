@@ -1,4 +1,4 @@
-package chk
+package connection
 
 import (
 	"net"

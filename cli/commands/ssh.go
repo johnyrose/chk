@@ -5,7 +5,6 @@ import (
 	"net"
 	"strings"
 
-	"github.com/Ripolak/chk/chk"
 	"github.com/urfave/cli/v2"
 )
 

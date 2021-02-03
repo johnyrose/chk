@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/Ripolak/chk/chk"
 	"github.com/go-ping/ping"
 	"github.com/urfave/cli/v2"
 )
