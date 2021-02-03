@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
+	"github.com/Ripolak/chk/connection"
 	"github.com/go-ping/ping"
 	"github.com/urfave/cli/v2"
 )
@@ -53,7 +54,7 @@ func pingAction(c *cli.Context) error {
 	count := c.Int("count")
 	timeout := c.Int("timeout")
 	interval := c.Int("interval")
-	res, err := chk.CheckICMP(address, count, timeout, interval)
+	res, err := connection.CheckICMP(address, count, timeout, interval)
 	displayPingResult(res, address, verbose)
 	return nil
 }

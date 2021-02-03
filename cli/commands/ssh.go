@@ -5,6 +5,7 @@ import (
 	"net"
 	"strings"
 
+	"github.com/Ripolak/chk/connection"
 	"github.com/urfave/cli/v2"
 )
 
@@ -33,7 +34,7 @@ func sshAction(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	_, err = chk.CheckSSH(address, timeout)
+	_, err = connection.CheckSSH(address, timeout)
 	displaySSHResult(address, err)
 	return nil
 }

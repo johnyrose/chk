@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/Ripolak/chk/connection"
 	"github.com/urfave/cli/v2"
 )
 
@@ -33,7 +34,7 @@ func httpAction(c *cli.Context) error {
 		address = "http://" + address
 	}
 	timeout := c.Int("timeout")
-	res, err := chk.CheckHTTP(address, timeout)
+	res, err := connection.CheckHTTP(address, timeout)
 	if err != nil {
 		displayHTTPErrorResult(address, err)
 	} else {

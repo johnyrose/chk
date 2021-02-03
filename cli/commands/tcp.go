@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 
+	"github.com/Ripolak/chk/connection"
 	"github.com/urfave/cli/v2"
 )
 
@@ -29,7 +30,7 @@ func tcpAction(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	res, err := chk.CheckTCP(address, timeout)
+	res, err := connection.CheckTCP(address, timeout)
 	if err != nil {
 		displayTCPErrorResult(err, address)
 	} else {
